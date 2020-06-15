@@ -13,8 +13,8 @@
 
 service: fb-live-video-webhook
 # app and org for use with dashboard.serverless.com
-#app: your-app-name
-#org: your-org-name
+app: spring-data-bi
+org: spring-media
 
 # You can pin your service to only deploy with a specific Serverless version
 # Check out our docs for more details
@@ -22,7 +22,9 @@ service: fb-live-video-webhook
 
 provider:
   name: aws
-  runtime: python3.8
+  stage: dev
+  region: eu-central-1
+  runtime: python3.7
 
 # you can overwrite defaults here
 #  stage: dev
@@ -59,7 +61,7 @@ provider:
 
 functions:
   hello:
-    handler: handler.hello
+    handler: src/handler.webhook
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details

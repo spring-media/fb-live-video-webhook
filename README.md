@@ -11,10 +11,22 @@
 - [Serverless Documentation](https://www.serverless.com/framework/docs)
 - Version: v1.72.0
 ## Initialization
-#### using this boilerplate template
-`serverless create --template aws-python3`
+### Dependencies
+`pip install -r requirements.txt`
+### Credentials
+for the `VERIFY_TOKEN`, check the password tool (Evolution Welt/Facebook PAGES)
+
+`touch .env`
+
+`vim .env`
+
+```
+ACCESS_KEY_ID=YOUR_KEY_ID
+SECRET_ACCESS_KEY=YOUR_ACCESS_KEY
+VERIFY_TOKEN=YOUR_TOKEN
+```
 ## Deployment
 ### clone the repository
 `git clone`
 ### deploy using the 'Serverless' framework
-`serverless deploy -- stage dev --region eu-central-1`
+`serverless deploy -- stage {dev/test/prod} --region eu-central-1`
