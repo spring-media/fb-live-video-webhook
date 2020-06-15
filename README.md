@@ -28,5 +28,8 @@ VERIFY_TOKEN=YOUR_TOKEN
 ## Deployment
 ### clone the repository
 `git clone`
+### run all tests using pyenv
+`cd test`
+`pytest -v -s handlerTest.py`
 ### deploy using the 'Serverless' framework
 `serverless deploy -- stage {dev/test/prod} --region eu-central-1`

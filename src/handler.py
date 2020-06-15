@@ -27,20 +27,22 @@ def webhook(event, context):
     try:
         response = {
             "statusCode": 200,
-            "body": "",
+            "body": "success",
         }
         if event['method'] == 'GET':
-            handle_verif_req(event, response)
+            return handle_verif_req(event, response)
         elif  event['method'] == 'POST':
-            handle_ev_notifs(event, response)
+            return handle_ev_notifs(event, response)
         else:
             response = {
                     "statusCode": 400,
-                    "body":  "No POST or GET detected sorry"
+                    "body":  "No POST or GET detected."
             }
             return response
     except Exception as e:
+        #logging.error("'method' was not provided, the application ends.")
         print(e)
+        #logging.error(e)
         return e
 
 def handle_verif_req(event, response):
@@ -50,7 +52,8 @@ def handle_verif_req(event, response):
     """
 
     if 'hub.verify_token' in event['query'] and  event['query']['hub.verify_token'] == VERIFY_TOKEN:
-        logging.info("succefully verified")
+        #logging.info("succefully verified")
+        print("succefully verified")
         response['body'] = event['query']['hub.challenge']
         return response
     else:
@@ -70,7 +73,9 @@ def handle_ev_notifs(event, response):
     :return: response
     """
     if 'entry' in event['body']:
-        logging.info(event['body']['entry'])
+        #logging.info(event['body']['entry'])
+        print(event['body']['entry'])
     else:
-        logging.info(event['body'])  # Something we dont handle yet and we want to take a look ...
+        #logging.info(event['body'])  # Something we dont handle yet and we want to take a look ...
+        print(event['body'])
     return response
