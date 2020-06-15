@@ -7,21 +7,22 @@ Since both requests use HTTPs, your server must have a valid TLS or SSL certific
 import json
 import logging
 import boto3
-from utils.facebookhandler import FacebookHandler
+import os
 
 VERIFY_TOKEN = os.environ['VERIFY_TOKEN'] #reemplace
-response = {
-    "statusCode": 200,
-    "body": "",
-}
+
 
 def webhook(event, context):
 
     try:
+        response = {
+            "statusCode": 200,
+            "body": "",
+        }
         if event['method'] == 'GET':
-            handle_verif_req(event)
+            handle_verif_req(event, response)
         elif  event['method'] == 'POST':
-            handle_ev_notifs(event)
+            handle_ev_notifs(event, response)
         else:
             response = {
                     "statusCode": 400,
@@ -32,7 +33,7 @@ def webhook(event, context):
         print(e)
         return e
 
-def handle_verif_req(event):
+def handle_verif_req(event, response):
     """
     :param event: the payload of the verification GET request
     :return: hub.challenge
@@ -41,7 +42,7 @@ def handle_verif_req(event):
     if 'hub.verify_token' in event['query'] and  event['query']['hub.verify_token'] == VERIFY_TOKEN:
         logging.info("succefully verified")
         response['body'] = event['query']['hub.challenge']
-        return  response
+        return response
     else:
         print("Wrong verification token!")
         response = {
@@ -50,16 +51,16 @@ def handle_verif_req(event):
         }
         return response
 
-def handle_ev_notifs(request):
+def handle_ev_notifs(event, response):
     """
     handle the POST request sent by Facebook regarding the change of a live video on a subscribed page
     store the data received by Facebook on AWS S3
     :return: HTTP status code 200 OK HTTPS
     """
     if 'entry' in event['body']:
-        FacebookHandler.entries(event['body']['entry'])
+        logging.info(event['body']['entry'])
     else:
-        print(event['body'])  # Something we dont handle yet and we want to take a look ...
+        logging.info(event['body'])  # Something we dont handle yet and we want to take a look ...
     return response
 
 def hello(event, context):

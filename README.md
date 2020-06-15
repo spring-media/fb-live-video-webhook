@@ -1,4 +1,6 @@
 # fb-live-video-webhook
+## Facebook
+[Facebook Documentation](https://developers.facebook.com/docs/graph-api/webhooks/getting-started/webhooks-for-pages/)
 ## Python 
 
 ## AWS
@@ -15,4 +17,4 @@
 ### clone the repository
 `git clone`
 ### deploy using the 'Serverless' framework
-`serverless deploy`
+`serverless deploy -- stage dev --region eu-central-1`
