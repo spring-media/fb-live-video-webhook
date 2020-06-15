@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="5624a63a-183f-41ec-b836-6e028901b1dc" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1dLqvHrxZWEk2IAnDurLJybMLqw" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="5624a63a-183f-41ec-b836-6e028901b1dc" name="Default Changelist" comment="" />
+      <created>1592214949405</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1592214949405</updated>
+      <workItem from="1592214951497" duration="1027000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="3072" y="23" width="1280" height="1352" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1592215076029">
+      <screen x="1792" y="23" width="2560" height="1353" />
+    </state>
+    <state x="3072" y="23" width="1280" height="1352" key="#com.intellij.fileTypes.FileTypeChooser/0.23.1792.1097/1792.23.2560.1353@1792.23.2560.1353" timestamp="1592215076029" />
+    <state x="3072" y="654" width="1280" height="722" key="SettingsEditor" timestamp="1592216016530">
+      <screen x="1792" y="23" width="2560" height="1353" />
+    </state>
+    <state x="3072" y="654" width="1280" height="722" key="SettingsEditor/0.23.1792.1097/1792.23.2560.1353@1792.23.2560.1353" timestamp="1592216016530" />
+  </component>
+</project>
