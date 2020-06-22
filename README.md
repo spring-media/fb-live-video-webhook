@@ -20,6 +20,7 @@
 ### install the apps and its modules
 `npm install`
 ### add your credentials in `serverless.yml`
+`TOKEN` can be found in the password tool `30 Evolution Welt/ Facebook PAGES`
 ### deploy using the *Serverless* framework
 `serverless deploy`
 #### deploy only updates to the function (faster)
