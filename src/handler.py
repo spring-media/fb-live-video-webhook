@@ -1,81 +1,93 @@
-'''
-Your endpoint must be able to process two types of HTTPS requests:
-Verification Requests and Event Notifications.
-Since both requests use HTTPs, your server must have a valid TLS or SSL certificate correctly configured and installed. Self-signed certificates are not supported.
-'''
-
-import sys
-import json
-import logging
 import boto3
+import json
 import os
-from dotenv import load_dotenv
-from pathlib import Path
+from base64 import b64decode
+import datetime as dt
+import uuid
 
-env_path = Path('..') / '.env'
-load_dotenv(dotenv_path=env_path)
-VERIFY_TOKEN = os.getenv('VERIFY_TOKEN')
+# from utils.facebookhandler import FacebookHandler 
+VERIFY_TOKEN = os.environ['VERIFY_TOKEN']
+FB_BUCKET = os.environ['BUCKET'] 
+FB_PATH = os.environ['BUCKET_PATH'] 
+
+
+def write_json(event,json_key: str,bucket=FB_BUCKET,path=FB_PATH):
+    s3 = boto3.resource('s3')
+    fb_key= path + "/" + json_key
+    data = json.loads(json.dumps(event['headers']))    
+    s3.Object(bucket, fb_key).put(Body=(bytes(json.dumps(data).encode('UTF-8'))))
+
+def respond(err, res=None):
+    return {
+        'statusCode': '400' if err else '200',
+        'body': err.message if err else json.dumps(res),
+        'headers': {
+            'Content-Type': 'application/json',
+        },
+    }
 
 
 def webhook(event, context):
-    """
-    The main handler for the FB webhook
-    :param event: passed from Lambda function
-    :param context: passed from Lambda function
-    :return: reponse
-    """
+
     try:
+        print("--> entry{}".format(event))
+        uuid_4 = str(uuid.uuid4())
+        run_hour = dt.datetime.now().strftime("%H")
+        run_date_min = dt.datetime.now().strftime("%M")
+        run_date_ymd = dt.datetime.now().strftime("%Y%m%d")
+    
+        filename = (
+                    "fb-webhook-video-live-"
+                    + run_date_ymd
+                    + "-"
+                    + run_hour
+                    + "-"
+                    + run_date_min
+                    + "-"
+                    + uuid_4
+                    + ".hook"
+                    #+ str(object_id)
+                    )
+                
         response = {
             "statusCode": 200,
-            "body": "success",
+            "body":"",
         }
-        if event['method'] == 'GET':
-            return handle_verif_req(event, response)
-        elif  event['method'] == 'POST':
-            return handle_ev_notifs(event, response)
+        
+        operation = event['httpMethod']
+        print("operation:{}".format(operation)) 
+        if operation== 'GET':
+            if 'hub.verify_token' in event['query'] and  event['query']['hub.verify_token'] == VERIFY_TOKEN:     
+                print("succefully verified")
+                response['body'] = event['query']['hub.challenge']
+                return response
+            else:
+                print("Wrong verification token!")
+                response = {
+                    "statusCode": 400,
+                    "body":  "Wrong validation token"
+                }
+                return response
+        # hier kommt die Verarbeitung hin.
+        # body in file auf s3 schreiben.
+        elif  operation == 'POST':
+            if 'entry' in event['body']:
+                write_json(event,filename)  
+                # FacebookHandler.entries(event['body']['entry'])
+            else:
+                print("--> no entry")
+                #for r in event:
+                #    print(r)
+                #print(event['body'])
+                # hier testwweise headers wegschreiben
+                write_json(event,filename)                
+            return response
         else:
             response = {
                     "statusCode": 400,
-                    "body":  "No POST or GET detected."
+                    "body":  "No POST or GET detected sorry"
             }
             return response
     except Exception as e:
-        #logging.error("'method' was not provided, the application ends.")
         print(e)
-        #logging.error(e)
         return e
-
-def handle_verif_req(event, response):
-    """
-    :param event: the payload of the verification GET request
-    :return: hub.challenge
-    """
-
-    if 'hub.verify_token' in event['query'] and  event['query']['hub.verify_token'] == VERIFY_TOKEN:
-        #logging.info("succefully verified")
-        print("succefully verified")
-        response['body'] = event['query']['hub.challenge']
-        return response
-    else:
-        print("Wrong verification token!")
-        response = {
-            "statusCode": 400,
-            "body":  "Wrong validation token"
-        }
-        return response
-
-def handle_ev_notifs(event, response):
-    """
-    - handle the POST request sent by Facebook regarding the change of a live video on a subscribed page
-    - store the data received by Facebook on AWS S3
-    :param event: the event from AWS Lambda function
-    :param response: the http response
-    :return: response
-    """
-    if 'entry' in event['body']:
-        #logging.info(event['body']['entry'])
-        print(event['body']['entry'])
-    else:
-        #logging.info(event['body'])  # Something we dont handle yet and we want to take a look ...
-        print(event['body'])
-    return response
