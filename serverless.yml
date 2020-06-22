@@ -1,0 +1,21 @@
+service: fb-webhook
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: test
+  region: eu-central-1
+
+functions:
+  app:
+    handler: index.handler
+    environment:
+      ACCESS_KEY_ID: YOUR_ACCESS_KEY_ID
+      SECRET_ACCESS_KEY: YOUR_SECRET_ACCESS_KEY
+      BUCKET_TEST: spring-data-bi-test
+      PATH_TEST: /facebook/test/video/live
+      TOKEN: YOUR_TOKEN
+      APP_SECRET: YOUR_APP_SECRET
+    events:
+      - http: ANY /
+      - http: 'ANY {nodejs-fb-webhook}'
