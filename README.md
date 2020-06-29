@@ -1,6 +1,6 @@
 # fb-live-video-webhook
 - **current stage**: TEST
-- written in Node.js v12.x
+- written in Python 3.7
 ## AWS
 - uses the technical user `spring-data-bi`
 - `index.js` specifies the webhook logic
