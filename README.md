@@ -20,6 +20,7 @@
 ## Tests
 * Unit Tests should be written for each new functionality
 * Tests are executed as part of the deployment
+* run tests before deployment: `python -m unittest`
 ## Deployment
 ### clone the repository
 `git clone`
