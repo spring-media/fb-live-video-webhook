@@ -9,7 +9,7 @@ class WebhookTest(unittest.TestCase):
     DEST_BUCKET = 'spring-data-bi-dev'
     DEST_PATH = 'facebook/$STATE/video/webhook'
     STATE = 'dev'
-    TOKEN = 't0k3N'
+    TOKEN = 'YOUR_TOKEN'
 
     def setUp(self):
         """
