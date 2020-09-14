@@ -1,21 +1,25 @@
-service: fb-webhook
+service: fb-live-video-webhook
+
+frameworkVersion: ">=1.2.0 <2.0.0"
 
 provider:
   name: aws
-  runtime: nodejs12.x
-  stage: test
+  runtime: python3.7
+  stage: {dev, test, prod}
   region: eu-central-1
+  timeout: 30
+  role: arn:aws:iam::208165541056:role/BI-Data-Engineer-Role
+  service: fb-live-video-webhook
 
 functions:
-  app:
-    handler: index.handler
+  webhook:
+    name: ${self:provider.service}-${self:provider.stage}
+    handler: src/lambda_function.webhook
     environment:
-      ACCESS_KEY_ID: YOUR_ACCESS_KEY_ID
-      SECRET_ACCESS_KEY: YOUR_SECRET_ACCESS_KEY
-      BUCKET_TEST: spring-data-bi-test
-      PATH_TEST: /facebook/test/video/live
-      TOKEN: YOUR_TOKEN
-      APP_SECRET: YOUR_APP_SECRET
+      BUCKET: YOUR_BUCKET
+      BUCKET_PATH: YOUR_PATH
+      STATE: {dev, test, prod}
+      VERIFY_TOKEN: YOUR_TOKEN
     events:
-      - http: ANY /
-      - http: 'ANY {nodejs-fb-webhook}'
+      - http: GET webhook
+      - http: POST webhook
