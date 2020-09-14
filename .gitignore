@@ -1,1 +1,3 @@
 .idea/
+.serverless
+prod_config.yml
