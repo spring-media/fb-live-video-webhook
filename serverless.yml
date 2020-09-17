@@ -21,5 +21,4 @@ functions:
       STATE: {dev, test, prod}
       VERIFY_TOKEN: YOUR_TOKEN
     events:
-      - http: GET webhook
-      - http: POST webhook
+      - http: ANY webhook
