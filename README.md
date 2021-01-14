@@ -1,6 +1,12 @@
 # fb-live-video-webhook
 - **current stage**: PROD
 - written in Python 3.7
+## FB
+- `API_VERSION`: `9.0`
+- Account details to be found in the password tool `30 Evolution Welt/ Facebook User`
+- uses the App `NMT BI`
+- needs to be subscribed to the `Page` Webhook in Facebook for Developers
+- App needs to be set to `Live`
 ## AWS
 - uses the technical user `spring-data-bi`
 - `lambda_function.py` specifies the webhook logic
@@ -9,7 +15,7 @@
 ### API Gateway
 - Gets called by Facebook using HTTP `GET` or `POST` request
 - used to invoke the Lambda function
-- [endpoint](https://1b50va2t51.execute-api.eu-central-1.amazonaws.com/test)
+- [endpoint test](https://9u3wjmdx1g.execute-api.eu-central-1.amazonaws.com/test/webhook)
 ### S3
 - files contain the live status of videos, the time of the event and the ID of the page
  - files are written to `spring-data-bi/facebook/{env}/video/webhook`
@@ -26,7 +32,7 @@
 `git clone`
 ### add your credentials in `serverless.yml`
 * `TOKEN`: can be found in the password tool `30 Evolution Welt/ Facebook PAGES`
-* `STATE`: the state of the service
+* `STAGE`: the state of the service
 ### deploy using the *Serverless* framework
 `serverless deploy`
 #### deploy only updates to the function (faster)
